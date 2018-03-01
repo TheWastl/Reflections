@@ -299,18 +299,21 @@ function repeat_func() {
 		else if (mainstack.length) args[i] = mainstack.pop();
 		else return error(ST_UNDERFLOW);
 	}
-	if (!varargs.length) {
-		if (!mainstack.length) return error(ST_UNDERFLOW);
-		l = args.shift();
-		args.push(mainstack.pop());
-		while(l) {
-			exec_func(f, args);
-			l--;
-		}
-		return true;
-	}
 	var oldstack = mainstack;
 	var fullmainstack = [];
+	if (!varargs.length) {
+		if (!oldstack.length) return error(ST_UNDERFLOW);
+		l = args.shift();
+		args.push(oldstack.pop());
+		while(l) {
+			mainstack = [];
+			exec_func(f, args);
+			fullmainstack = mainstack.concat(fullmainstack);
+			l--;
+		}
+		mainstack = fullmainstack;
+		return true;
+	}
 	for(l = Math.floor(oldstack.length / varargs.length); l; l--) {
 		mainstack = [];
 		for(i = 0; i < varargs.length; i++) args[i] = oldstack.pop();
