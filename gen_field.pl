@@ -67,8 +67,8 @@ sub map_to_js {
 
 open my $doc, '>', "$dir/field.html" or die $!;
 
-print $doc '<!doctype html><html><head><title>Functions</title><style>'.
-	'.zero{outline:1px solid red}table{text-align:center}</style>'.
+print $doc '<!doctype html><html><head><title>Reflections Functions</title>'.
+	'<style>.zero{outline:1px solid red}table{text-align:center}</style>'.
 	'<script src="field_addons.js"></script></head><body><table>';
 
 my $maxx = get_maxx(0, 2);
