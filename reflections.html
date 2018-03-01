@@ -1,0 +1,65 @@
+<!doctype html>
+<html><head>
+	<title>Mirror Interpreter</title>
+	<script src='field.js'></script>
+	<script src='mirror.js'></script>
+	<style>
+		#wrapper {
+			overflow: hidden;
+		}
+
+		#codediv {
+			float: left;
+		}
+
+		#stackdiv {
+			overflow: auto;
+		}
+
+		table {
+			overflow: hidden;
+		}
+
+		td {
+			font-family: DejaVu Sans Mono,monospace,Lucida console;
+			text-align: right;
+		}
+
+		.stack_num {
+			min-width: 4ch;
+		}
+
+		.stack_ascii {
+			min-width: 5ch;
+		}
+
+		#speed {
+			text-align: right;
+		}
+
+		#input {
+			font-family: DejaVu Sans Mono,monospace,Lucida console;
+		}
+	</style>
+</head><body>
+<div id='wrapper'>
+<div id='codediv'>
+Code:<br>
+<textarea id='code' cols=80 rows=25></textarea><br>
+</div><div id='stacksdiv'>
+	<table hidden id='stacks'></table>
+</div></div>
+<label>
+<input type='checkbox' id='slow'>Time between steps:
+</label>
+<input id='speed' type='number' min=0 step=50 value=500> ms<!--/label-->
+<br>
+<button type='button' id='run'>Run</button>
+<button type='button' id='stop'>Stop</button><br>
+Output:<br>
+<textarea readonly id='output' cols=80 rows=25></textarea>
+<div hidden>
+<input type='text' id='input' size=80>
+<button type='button' id='eof'>EOF</button>
+</div>
+</body></html>
