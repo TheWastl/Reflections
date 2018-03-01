@@ -53,29 +53,6 @@ function init() {
 	button.onclick = end;
 }
 
-/* Now auto-generated
-const command = [ [ // the playfield (the func constants are auto-generated)
-// y >= 0; x >= 0
-	[ F_QUINE, F_PRINT, F_READ, F_NUM2STR, F_STR2NUM ],
-	[ F_ADD, F_MULTIPLY, F_POWER ],
-	[ F_SUBTRACT, F_DIVIDE, F_MOD, F_ABS ],
-	[ F_LT, F_EQ, F_GT ],
-	[ F_LAND, F_LNOT, F_LOR, F_LXOR ],
-], [
-// y >= 0; x < 0
-	[ F_BAND, F_LSHIFT ],
-	[ F_BNOT, F_RSHIFT ],
-	[ F_BOR ],
-	[ F_BXOR ]
-], [
-// y < 0; x >= 0
-	[ F_UC, F_LC ]
-], [
-// y < 0; x < 0
-	[ F_TIME, F_PROCESS_TIME ]
-] ];
-*/
-
 const	D_NORTH = 0, // direction values
 	D_EAST = 1,
 	D_SOUTH = 2,
