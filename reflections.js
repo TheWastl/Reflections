@@ -1,4 +1,4 @@
-var codearea, output, form, slow, table, speed, eof, inputia, inputiadiv, input, inputdiv, inputbuf, interactive;
+var codearea, output, form, slow, table, speed, eof, inputia, inputiadiv, input, inputdiv, inputbuf, ia;
 
 function init() {
 	codearea = document.getElementById('code');
