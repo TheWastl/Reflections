@@ -531,7 +531,6 @@ function disable_speed() {
 
 function ia_input() {
 	inputdiv.hidden = ia.checked;
-	alert(ia.checked+';'+inputdiv.hidden);
 }
 
 window.onload = init;
