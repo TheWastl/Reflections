@@ -43,7 +43,7 @@ function init() {
 	ia.oninput();
 	inputia = document.getElementById('input-ia');
 	inputia.onkeydown = read;
-	inputiadiv = input.parentElement;
+	inputiadiv = inputia.parentElement;
 	inputiadiv.hidden = true;
 	eof = document.getElementById('eof');
 	eof.onclick = send_eof;
