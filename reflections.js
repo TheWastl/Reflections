@@ -103,7 +103,7 @@ function start() {
 	}, { width: width });
 	table.table.hidden = !slow.checked;
 	if (!ia.checked) {
-		inputbuf = input.value;
+		inputbuf = input.value.split("\n");
 		input.readOnly = true;
 	}
 	run();
