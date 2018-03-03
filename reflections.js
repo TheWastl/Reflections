@@ -374,6 +374,7 @@ function exec_func(f, args) {
 				if (tmp === undefined) mainstack.push(0);
 				else push_string(tmp);
 			}
+			break;
 		case F_ADD: mainstack.push(args[0] + args[1]);
 			break;
 		case F_MULTIPLY: mainstack.push(args[0] * args[1]);
