@@ -40,7 +40,7 @@ function init() {
 	ia.onlick = ia.oninput;
 	input = document.getElementById('input');
 	inputdiv = input.parentElement;
-	ia_update();
+	ia_input();
 	inputia = document.getElementById('input-ia');
 	inputia.onkeydown = read;
 	inputiadiv = input.parentElement;
