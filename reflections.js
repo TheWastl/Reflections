@@ -1,4 +1,4 @@
-var codearea, output, input, form, slow, table, speed, eof, inputdiv;
+var codearea, output, form, slow, table, speed, eof, inputia, inputiadiv, input, inputdiv, inputbuf, interactive;
 
 function init() {
 	codearea = document.getElementById('code');
@@ -35,12 +35,18 @@ function init() {
 	}
 	table.values = [];
 	output = document.getElementById('output');
+	ia = document.getElementById('interactive');
+	ia.oninput = ia_input();
+	ia.onlick = ia.oninput;
 	input = document.getElementById('input');
-	input.onkeydown = read;
+	inputdiv = input.parentElement;
+	ia_update();
+	inputia = document.getElementById('input-ia');
+	inputia.onkeydown = read;
+	inputiadiv = input.parentElement;
+	inputiadiv.hidden = true;
 	eof = document.getElementById('eof');
 	eof.onclick = send_eof;
-	inputdiv = input.parentElement;
-	inputdiv.hidden = true;
 	slow = document.getElementById('slow');
 	slow.disabled = false;
 	slow.oninput = disable_speed;
@@ -96,6 +102,10 @@ function start() {
 		return val;
 	}, { width: width });
 	table.table.hidden = !slow.checked;
+	if (!ia.checked) {
+		inputbuf = input.value;
+		input.readOnly = true;
+	}
 	run();
 }
 
@@ -351,12 +361,19 @@ function exec_func(f, args) {
 			  return error('No ASCII character: '+args[0]);
 			output.value += String.fromCharCode(args[0]);
 			break;
-		case F_READ: if (interval) clearInterval(interval);
-			input.value = '';
-			inputdiv.hidden = false;
-			input.focus();
-			reading = true;
-			return false;
+		case F_READ:
+			if (ia.checked) {
+				if (interval) clearInterval(interval);
+				inputia.value = '';
+				inputiadiv.hidden = false;
+				inputia.focus();
+				reading = true;
+				return false;
+			} else {
+				tmp = inputbuf.shift();
+				if (tmp === undefined) mainstack.push(0);
+				else push_string(tmp);
+			}
 		case F_ADD: mainstack.push(args[0] + args[1]);
 			break;
 		case F_MULTIPLY: mainstack.push(args[0] * args[1]);
@@ -453,8 +470,8 @@ function push_string(str) {
 function read(evt) {
 	if (reading && (evt.key == 'Enter' || evt.keyCode == 13)) {
 		reading = false;
-		push_string(input.value);
-		inputdiv.hidden = true;
+		push_string(inputia.value);
+		inputiadiv.hidden = true;
 		run();
 	}
 }
@@ -463,7 +480,7 @@ function send_eof() {
 	if (reading) {
 		reading = false;
 		mainstack.push(0);
-		inputdiv.hidden = true;
+		inputiadiv.hidden = true;
 		run();
 	}
 }
@@ -491,12 +508,13 @@ function end() {
 		codearea.value = code_start;
 	}
 	if (reading) {
-		input.hidden = true;
+		inputia.hidden = true;
 		reading = false;
 	}
 	slow.disabled = false;
 	disable_speed();
 	codearea.readOnly = false;
+	input.readOnly = false;
 	return false;
 }
 
@@ -509,6 +527,10 @@ function error(msg) {
 
 function disable_speed() {
 	speed.disabled = !slow.checked;
+}
+
+function ia_input() {
+	inputdiv.hidden = ia.checked;
 }
 
 window.onload = init;
