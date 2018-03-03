@@ -530,7 +530,6 @@ function disable_speed() {
 }
 
 function ia_input() {
-	alert(ia.checked);
 	inputdiv.hidden = ia.checked;
 }
 
