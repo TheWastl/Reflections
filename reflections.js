@@ -36,7 +36,7 @@ function init() {
 	table.values = [];
 	output = document.getElementById('output');
 	ia = document.getElementById('interactive');
-	ia.oninput = ia_input();
+	ia.oninput = ia_input;
 	ia.onlick = ia.oninput;
 	input = document.getElementById('input');
 	inputdiv = input.parentElement;
