@@ -56,15 +56,17 @@
 <label>
 <input type='checkbox' id='slow'>Time between steps:
 </label>
-<input id='speed' type='number' min=0 step=50 value=500> ms<!--/label-->
+<input id='speed' type='number' min=0 step=50 value=500> ms
 <br>
 <label>
 	<input type='checkbox' id='interactive'>Interactive
 </label>
 <br>
 	<button type='button' id='run'>Run</button>
-	<button type='button' id='stop'>Stop</button>
-	<span id='permalink'></span>
+	<button type='button' id='stop'>Stop</button><br>
+	Permalink: <input type='text' readOnly id='permalink'></input>
+	<button id='permacopy'>Copy</button>
+<br>
 <div>
 	Input:<br>
 	<textarea id='input' cols=80 rows=25></textarea>
