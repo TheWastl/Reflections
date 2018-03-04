@@ -474,7 +474,7 @@ function exec_func(f, args) {
 					break;
 				case 7: mainstack.push(tmp.getSeconds());
 					break;
-				default: push_string(tmp.toLocaleString());
+				default: push_string(tmp.toString());
 					break;
 			}
 			break;
