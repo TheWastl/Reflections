@@ -1,4 +1,4 @@
-var codearea, output, form, slow, table, speed, eof, inputia, inputiadiv, input, inputdiv, inputbuf, ia;
+var codearea, codeinfo, output, form, slow, table, speed, eof, inputia, inputiadiv, input, inputdiv, inputbuf, ia;
 
 function init() {
 	codearea = document.getElementById('code');
@@ -12,6 +12,11 @@ function init() {
 	};
 	codearea.onfocusout = codearea.onclick;
 	codearea.readOnly = false;
+	codearea.oninput = function() {
+		codeinfo.innerText = codearea.value.length+' byte'+(codearea.value.length == 1 ? '' : 's');
+	};
+	codeinfo = document.getElementById('code-info');
+	codearea.oninput();
 	table = { table: document.getElementById('stacks') };
 	table.colgroup = document.createElement('colgroup');
 	table.table.appendChild(table.colgroup);
