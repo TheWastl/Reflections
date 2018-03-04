@@ -57,6 +57,7 @@ function init() {
 	button.onclick = start;
 	button = document.getElementById('stop');
 	button.onclick = end;
+	window.addEventListener('keydown', keypress);
 }
 
 const	D_NORTH = 0, // direction values
@@ -77,6 +78,10 @@ var code_start, code;
 var pos, origin, direction, mainstack, stacks, width;
 var interval;
 var reading;
+
+function keypress(evt) {
+	if (evt.keyCode == 13 && evt.ctrlKey) start();
+}
 
 function start() {
 	empty_table();
