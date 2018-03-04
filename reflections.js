@@ -1,4 +1,6 @@
-var codearea, codeinfo, output, form, slow, table, speed, eof, inputia, inputiadiv, input, inputdiv, inputbuf, ia;
+var codearea, codeinfo, output, form, slow, table, speed, eof, inputia, inputiadiv, input, inputdiv, inputbuf, ia, permalink;
+
+const fieldsep = "\xff";
 
 function init() {
 	codearea = document.getElementById('code');
@@ -14,9 +16,9 @@ function init() {
 	codearea.readOnly = false;
 	codearea.oninput = function() {
 		codeinfo.innerText = codearea.value.length+' byte'+(codearea.value.length == 1 ? '' : 's');
+		gen_link();
 	};
 	codeinfo = document.getElementById('code-info');
-	codearea.oninput();
 	table = { table: document.getElementById('stacks') };
 	table.colgroup = document.createElement('colgroup');
 	table.table.appendChild(table.colgroup);
@@ -42,10 +44,10 @@ function init() {
 	output = document.getElementById('output');
 	ia = document.getElementById('interactive');
 	ia.oninput = ia_input;
-	ia.onlick = ia.oninput;
+	ia.onclick = ia.oninput;
 	input = document.getElementById('input');
+	input.oninput = gen_link;
 	inputdiv = input.parentElement;
-	ia.oninput();
 	inputia = document.getElementById('input-ia');
 	inputia.onkeydown = read;
 	inputiadiv = inputia.parentElement;
@@ -57,11 +59,12 @@ function init() {
 	slow.oninput = disable_speed;
 	slow.onclick = slow.oninput;
 	speed = document.getElementById('speed');
-	disable_speed();
 	var button = document.getElementById('run');
 	button.onclick = start;
 	button = document.getElementById('stop');
 	button.onclick = end;
+	permalink = document.getElementById('permalink');
+	decode_link();
 	window.addEventListener('keydown', keypress);
 }
 
@@ -542,6 +545,26 @@ function disable_speed() {
 
 function ia_input() {
 	inputdiv.hidden = ia.checked;
+}
+
+function gen_link() {
+	permalink.innerText = location.origin+location.pathname+'##'+
+	  btoa([ codearea.value, Number(slow.checked), speed.value, Number(ia.checked), input.value ]
+	  .map(elem=>unescape(encodeURIComponent(elem))).join(fieldsep));
+}
+
+function decode_link() {
+	if (location.hash.match(/^##/)) {
+		fields = atob(location.hash.substr(2)).split(fieldsep).map(elem=>decodeURIComponent(escape(elem)));
+		codearea.value = fields[0];
+		slow.checked = Boolean(Number(fields[1]));
+		speed.value = Number(fields[2]);
+		ia.checked = Boolean(Number(fields[3]));
+		input.value = fields[4];
+	}
+	codearea.oninput();
+	slow.oninput();
+	ia.oninput();
 }
 
 window.onload = init;
