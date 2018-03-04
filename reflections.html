@@ -19,6 +19,8 @@
 			display: inline-block;
 			vertical-align: top;
 		}
+		
+		#indiv { float: left; }
 
 		table {
 			overflow: hidden;
@@ -66,13 +68,16 @@
 	<button type='button' id='stop'>Stop</button><br>
 	Permalink: <input type='text' readOnly id='permalink'></input>
 	<button id='permacopy'>Copy</button>
-<br>
-<div>
-	Input:<br>
-	<textarea id='input' cols=80 rows=25></textarea>
+<div id='io'>
+	<div id='indiv>
+		Input:<br>
+		<textarea id='input' cols=80 rows=25></textarea>
+	</div>
+	<div id='outdiv'>
+		Output:<br>
+		<textarea readonly id='output' cols=80 rows=25></textarea>
+	</div>
 </div>
-Output:<br>
-<textarea readonly id='output' cols=80 rows=25></textarea>
 <div hidden>
 <input type='text' id='input-ia' size=80>
 <button type='button' id='eof'>EOF</button>
