@@ -59,10 +59,16 @@ function init() {
 	slow.oninput = disable_speed;
 	slow.onclick = slow.oninput;
 	speed = document.getElementById('speed');
+	speed.oninput = gen_link;
 	var button = document.getElementById('run');
 	button.onclick = start;
 	button = document.getElementById('stop');
 	button.onclick = end;
+	button = document.getElementById('permacopy');
+	button.onclick = function() {
+		permalink.select();
+		document.execCommand('copy');
+	};
 	permalink = document.getElementById('permalink');
 	decode_link();
 	window.addEventListener('keydown', keypress);
@@ -541,10 +547,12 @@ function error(msg) {
 
 function disable_speed() {
 	speed.disabled = !slow.checked;
+	gen_link();
 }
 
 function ia_input() {
 	inputdiv.hidden = ia.checked;
+	gen_link();
 }
 
 function gen_link() {
