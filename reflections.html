@@ -5,17 +5,17 @@
 	<script src='reflections.js'></script>
 	<link rel="stylesheet" href="reflections.css">
 	<style>
-		#wrapper {
+		.wrapper {
 			overflow: visible;
 			width: inherit;
 			white-space: nowrap;
 		}
 
-		#codediv {
+		.left {
 			display: inline-block;
 		}
 
-		#stacksdiv {
+		.right {
 			display: inline-block;
 			vertical-align: top;
 		}
@@ -49,11 +49,11 @@
 		}
 	</style>
 </head><body>
-<div id='wrapper'>
-<div id='codediv'>
+<div class='wrapper'>
+<div class='left'>
 	Code (<span id='code-info'>0 bytes</span>):<br>
 <textarea id='code' cols=80 rows=25></textarea><br>
-</div><div id='stacksdiv'>
+</div><div class='right'>
 	<table hidden id='stacks'></table>
 </div></div>
 <label>
@@ -69,12 +69,12 @@
 	<button type='button' id='stop'>Stop</button><br>
 	Permalink: <input type='text' readOnly id='permalink'></input>
 	<button id='permacopy'>Copy</button>
-<div id='io'>
-	<div id='indiv'>
+<div class='wrapper'>
+	<div class='left'>
 		Input:<br>
 		<textarea id='input' cols=80 rows=25></textarea>
 	</div>
-	<div id='outdiv'>
+	<div class='right'>
 		Output:<br>
 		<textarea readonly id='output' cols=80 rows=25></textarea>
 	</div>
