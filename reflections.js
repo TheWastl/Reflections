@@ -556,7 +556,7 @@ function ia_input() {
 }
 
 function gen_link() {
-	permalink.innerText = location.origin+location.pathname+'##'+
+	permalink.value = location.origin+location.pathname+'##'+
 	  btoa([ codearea.value, Number(slow.checked), speed.value, Number(ia.checked), input.value ]
 	  .map(elem=>unescape(encodeURIComponent(elem))).join(fieldsep));
 }
