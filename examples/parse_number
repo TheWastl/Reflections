@@ -1,0 +1,8 @@
+  _v@\   Read a line from STDIN and parse it as a positive decimal number.
+|* / (0  Note that there is NO check if the input IS a number (matches /^[0-9]+$/).
+     *   It gives a stack underflow error if the line is empty.
+     (1/ --> Leave here when done. The stack may contain a strange value if the input was not a number.
+     >~<
+      1)
+       \#:(1\
+     \(0__0)/
