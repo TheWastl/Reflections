@@ -1,7 +1,7 @@
-        \
+     \  Output the Fibonacci numbers until stopped, separated by newlines.
 /*\   /# (0:0\
-* 0   \_ (0\/ :(0\
+* 0  *\_ (0\/ :(0\
   \       v/#@/_ /
-        *1)0)*
-\     (1/ : \\/
+\  (1/   1)0)*
+          : \\/
           \(1/
