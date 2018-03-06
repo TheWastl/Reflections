@@ -1,4 +1,6 @@
 # Reflections
 
-Reflections is a stack-based, two-dimensional, esoteric language. You can interpret it online [here](https://thewastl.github.io/Reflections/reflections.html).
-See [wiki](https://github.com/TheWastl/Reflections/wiki) for documentation.
+Reflections is a stack-based, two-dimensional, esoteric language.
+* [Online Interpreter](https://thewastl.github.io/Reflections/reflections.html)
+* [Documentation](https://github.com/TheWastl/Reflections/wiki)
+* [Chat](https://chat.stackexchange.com/rooms/74079/reflections) on [StackExchange](https://stackexchange.com/)
