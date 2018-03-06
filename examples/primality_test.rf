@@ -1,4 +1,4 @@
-  _v@\
+  _v@\  Take a decimal number from STDIN and output 1 if it's prime, else 0
 |* / (0     /   \
    /;*      <
 /0):\(1/# + /#+\
