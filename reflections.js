@@ -1,9 +1,11 @@
-var codearea, codeinfo, output, form, slow, table, speed, eof, inputia, inputiadiv, input, inputdiv, inputbuf, ia, permalink;
+var codearea, codeinfo, output, form, slow, table, speed, eof, inputia, inputiadiv, input, inputdiv, inputbuf, ia, permalink, preset;
 
 const fieldsep = "\xff";
 
+var $ = n=>document.getElementById(n);
+
 function init() {
-	codearea = document.getElementById('code');
+	codearea = $('code');
 	codearea.onclick = function() {
 		if (interval)  {
 			codearea.value = code.join("\n");
@@ -18,8 +20,8 @@ function init() {
 		codeinfo.innerText = codearea.value.length+' byte'+(codearea.value.length == 1 ? '' : 's');
 		gen_link();
 	};
-	codeinfo = document.getElementById('code-info');
-	table = { table: document.getElementById('stacks') };
+	codeinfo = $('code-info');
+	table = { table: $('stacks') };
 	table.colgroup = document.createElement('colgroup');
 	table.table.appendChild(table.colgroup);
 	table.colgroup.appendChild(document.createElement('col'));
@@ -41,36 +43,41 @@ function init() {
 		add_val(i, 'h', header);
 	}
 	table.values = [];
-	output = document.getElementById('output');
-	ia = document.getElementById('interactive');
+	output = $('output');
+	ia = $('interactive');
 	ia.oninput = ia_input;
 	ia.onclick = ia.oninput;
-	input = document.getElementById('input');
+	input = $('input');
 	input.oninput = gen_link;
 	inputdiv = input.parentElement;
-	inputia = document.getElementById('input-ia');
+	inputia = $('input-ia');
 	inputia.onkeydown = read;
 	inputiadiv = inputia.parentElement;
 	inputiadiv.hidden = true;
-	eof = document.getElementById('eof');
+	eof = $('eof');
 	eof.onclick = send_eof;
-	slow = document.getElementById('slow');
+	slow = $('slow');
 	slow.disabled = false;
 	slow.oninput = disable_speed;
 	slow.onclick = slow.oninput;
-	speed = document.getElementById('speed');
+	speed = $('speed');
 	speed.oninput = gen_link;
-	var button = document.getElementById('run');
+	var button = $('preset');
+	button.onchange = function() {
+		decode_link(this.value);
+		this.value='';
+	}
+	button = $('run');
 	button.onclick = start;
-	button = document.getElementById('stop');
+	button = $('stop');
 	button.onclick = end;
-	button = document.getElementById('permacopy');
+	button = $('permacopy');
 	button.onclick = function() {
 		permalink.select();
 		document.execCommand('copy');
 	};
-	permalink = document.getElementById('permalink');
-	decode_link();
+	permalink = $('permalink');
+	decode_link(location.hash);
 	window.addEventListener('keydown', keypress);
 }
 
@@ -108,6 +115,7 @@ function start() {
 	for(var i = 0; i < 10; i++) stacks[i] = [];
 	slow.disabled = true;
 	speed.disabled = true;
+	ia.disabled = true;
 	code_start = codearea.value;
 	codearea.readOnly = true;
 	code = code_start.split("\n");
@@ -533,6 +541,7 @@ function end() {
 	}
 	slow.disabled = false;
 	disable_speed();
+	ia.disabled = false;
 	codearea.readOnly = false;
 	input.readOnly = false;
 	return false;
@@ -551,7 +560,7 @@ function disable_speed() {
 }
 
 function ia_input() {
-	inputdiv.hidden = ia.checked;
+	inputdiv.style.display = ia.checked ? 'none' : '';
 	gen_link();
 }
 
@@ -561,9 +570,9 @@ function gen_link() {
 	  .map(elem=>unescape(encodeURIComponent(elem))).join(fieldsep));
 }
 
-function decode_link() {
-	if (location.hash.match(/^##/)) {
-		fields = atob(location.hash.substr(2)).split(fieldsep).map(elem=>decodeURIComponent(escape(elem)));
+function decode_link(hash) {
+	if (hash.match(/^##/)) {
+		fields = atob(hash.substr(2)).split(fieldsep).map(elem=>decodeURIComponent(escape(elem)));
 		codearea.value = fields[0];
 		slow.checked = Boolean(Number(fields[1]));
 		speed.value = Number(fields[2]);
