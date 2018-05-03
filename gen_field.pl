@@ -70,9 +70,9 @@ open my $doc, '>', "$dir/field.html" or die $!;
 print $doc '<!doctype html><html><head><title>Reflections Functions</title>'.
 	'<style>.zero{outline:1px solid red}table{text-align:center}</style>'.
 	'<link rel="stylesheet" href="reflections.css"></head><body><h2>'.
-	'<a href=".">Reflections</a> Function Map</h2><a href='.
+	'<a href=".">Reflections</a> Function Map</h2><p><a href='.
 '"https://github.com/TheWastl/Reflections/wiki/Coordinate-system#functions">'.
-	'More information</a><table>';
+	'More information</a></p><table>';
 
 my $maxx = get_maxx(0, 2);
 my $minx = get_maxx(1, 3);
