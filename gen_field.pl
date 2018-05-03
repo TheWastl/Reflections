@@ -69,9 +69,7 @@ open my $doc, '>', "$dir/field.html" or die $!;
 
 print $doc '<!doctype html><html><head><title>Reflections Functions</title>'.
 	'<style>.zero{outline:1px solid red}table{text-align:center}</style>'.
-	'<link rel="stylesheet" href="reflections.css">'.
-	'<script src="field_addons.js"></script></head><body><h2><a href=".">'.
-	'Reflections</a> Function Map</h2><table>';
+	'<script src="field_addons.js"></script></head><body><table>';
 
 my $maxx = get_maxx(0, 2);
 my $minx = get_maxx(1, 3);
