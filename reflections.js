@@ -1,4 +1,4 @@
-var codearea, codeinfo, output, form, slow, table, speed, eof, inputia, inputiadiv, input, inputdiv, inputbuf, ia, permalink, preset;
+var codearea, codediv, codeinfo, output, form, slow, table, speed, eof, inputia, inputiadiv, input, inputdiv, inputbuf, ia, permalink, preset, button;
 
 const fieldsep = "\xff";
 
@@ -17,9 +17,12 @@ function init() {
 	codearea.onfocusout = codearea.onclick;
 	codearea.readOnly = false;
 	codearea.oninput = function() {
-		codeinfo.innerText = codearea.value.length+' byte'+(codearea.value.length == 1 ? '' : 's');
+		codeinfo.innerText = codearea.value.length+' byte'+
+		  (codearea.value.length == 1 ? '' : 's');
 		gen_link();
+		resize(codearea);
 	};
+	codediv = codearea.parentElement;
 	codeinfo = $('code-info');
 	table = { table: $('stacks') };
 	table.colgroup = document.createElement('colgroup');
@@ -48,7 +51,10 @@ function init() {
 	ia.oninput = ia_input;
 	ia.onclick = ia.oninput;
 	input = $('input');
-	input.oninput = gen_link;
+	input.oninput = function() {
+		gen_link();
+		resize(input);
+	};
 	inputdiv = input.parentElement;
 	inputia = $('input-ia');
 	inputia.onkeydown = read;
@@ -62,23 +68,22 @@ function init() {
 	slow.onclick = slow.oninput;
 	speed = $('speed');
 	speed.oninput = gen_link;
-	var button = $('preset');
-	button.onchange = function() {
+	$('preset').onchange = function() {
 		decode_link(this.value);
 		this.value='';
 	}
-	button = $('run');
-	button.onclick = start;
-	button = $('stop');
-	button.onclick = end;
-	button = $('permacopy');
-	button.onclick = function() {
+	button = $('main-button');
+	button.onclick = click;
+	$('permacopy').onclick = function() {
 		permalink.select();
 		document.execCommand('copy');
 	};
 	permalink = $('permalink');
 	decode_link(location.hash);
 	window.addEventListener('keydown', keypress);
+	resize(codearea);
+	resize(input);
+	resize(output);
 }
 
 const	D_NORTH = 0, // direction values
@@ -100,13 +105,21 @@ var pos, origin, direction, mainstack, stacks, width;
 var interval;
 var reading;
 
+function click(evt) {
+	if (interval) end();
+	else start();
+}
+
 function keypress(evt) {
 	if (evt.keyCode == 13 && evt.ctrlKey) start();
+	else if (evt.keyCode == 27 && interval) end();
 }
 
 function start() {
+	if (interval) return;
 	empty_table();
 	output.value = '';
+	resize(output)
 	pos = { x: -1, y: 0 };
 	origin = { x: 0, y: 0 };
 	direction = D_EAST;
@@ -129,6 +142,7 @@ function start() {
 		return val;
 	}, { width: width });
 	table.table.hidden = !slow.checked;
+	codediv.style.width = slow.checked ? '50%' : '100%';
 	if (!ia.checked) {
 		inputbuf = input.value.split("\n");
 		input.readOnly = true;
@@ -387,6 +401,7 @@ function exec_func(f, args) {
 			if (args[0] < 0 || args[0] >= 128)
 			  return error('No ASCII character: '+args[0]);
 			output.value += String.fromCharCode(args[0]);
+			resize(output)
 			break;
 		case F_READ:
 			if (ia.checked) {
@@ -515,6 +530,7 @@ function send_eof() {
 
 function run() {
 	if (slow.checked || interval) {
+		button.innerText = 'Stop (Escape)';
 		interval = window.setInterval(step, speed.value);
 		step();
 	} else while(step());
@@ -534,6 +550,7 @@ function end() {
 		clearInterval(interval);
 		interval = 0;
 		codearea.value = code_start;
+		button.innerText = 'Run (Ctrl-Enter)';
 	}
 	if (reading) {
 		inputia.hidden = true;
@@ -565,7 +582,7 @@ function ia_input() {
 }
 
 function gen_link() {
-	permalink.value = location.origin+location.pathname+'##'+
+	permalink.value = location.href.split('#')[0]+'##'+
 	  btoa([ codearea.value, Number(slow.checked), speed.value, Number(ia.checked), input.value ]
 	  .map(elem=>unescape(encodeURIComponent(elem))).join(fieldsep));
 }
@@ -582,6 +599,12 @@ function decode_link(hash) {
 	codearea.oninput();
 	slow.oninput();
 	ia.oninput();
+	input.oninput();
+}
+
+function resize(elem) {
+	elem.style.height = 0
+	elem.style.height = elem.scrollHeight+'px';
 }
 
 window.onload = init;

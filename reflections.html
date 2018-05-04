@@ -13,13 +13,23 @@
 
 		.left {
 			display: inline-block;
+			width: 100%;
+			padding-right: 7px;
 		}
 
 		.right {
 			display: inline-block;
 			vertical-align: top;
 		}
-		
+
+		textarea {
+			width: 100%;
+			resize: none;
+			white-space: pre;
+			overflow-wrap: normal;
+			overflow-x: hidden;
+		}
+
 		table {
 			overflow: hidden;
 		}
@@ -47,10 +57,9 @@
 	</style>
 </head><body>
 	<h2><a href='.'>Reflections</a> Interpreter</h2>
-<div class='wrapper'>
-<div class='left'>
+<div class='wrapper'><div class='left'>
 	Code (<span id='code-info'>0 bytes</span>):<br>
-<textarea id='code' cols=80 rows=25></textarea><br>
+<textarea id='code'></textarea><br>
 <select id='preset'>
 	<option value=''>Preset</option>
 	<option value='##X0hlbGxvLCBXb3JsZCE7I18jXyNfI18jXyNfI18jXyNfI18jXyNfI1//MP81MDD/MP8='>
@@ -84,20 +93,17 @@
 	<input type='checkbox' id='interactive'>Interactive
 </label>
 <br>
-	<button type='button' id='run'>Run</button>
-	<button type='button' id='stop'>Stop</button><br>
+	<button type='button' id='main-button'>Run (Ctrl-Enter)</button>
+	<!--button type='button' id='step'>Step</button-->
+	<!--button disabled type='button' id='stop'>Stop (Escape)</button--><br>
 	Permalink: <input type='text' readOnly id='permalink'></input>
-	<button id='permacopy'>Copy</button>
-<div class='wrapper'>
-	<div class='left'>
+	<button id='permacopy'>Copy</button><br>
+		<div>
 		Input:<br>
-		<textarea id='input' cols=80 rows=25></textarea>
-	</div>
-	<div class='right'>
+		<textarea id='input'></textarea>
+		</div>
 		Output:<br>
-		<textarea readonly id='output' cols=80 rows=25></textarea>
-	</div>
-</div>
+		<textarea readonly id='output'></textarea>
 <div hidden>
 <input type='text' id='input-ia' size=80>
 <button type='button' id='eof'>EOF</button>
