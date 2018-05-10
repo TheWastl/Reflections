@@ -351,20 +351,21 @@ function repeat_func() {
 		else return error(ST_UNDERFLOW);
 	}
 	var oldstack = mainstack;
-	var fullmainstack = [];
 	if (!varargs.length) {
 		if (!oldstack.length) return error(ST_UNDERFLOW);
 		l = args.shift();
 		args.push(oldstack.pop());
+		var fullmainstack = [];
 		while(l) {
 			mainstack = [];
 			exec_func(f, args);
 			fullmainstack = mainstack.concat(fullmainstack);
 			l--;
 		}
-		mainstack = fullmainstack;
+		mainstack = oldstack.concat(fullmainstack);
 		return true;
 	}
+	var fullmainstack = [];
 	for(l = Math.floor(oldstack.length / varargs.length); l; l--) {
 		mainstack = [];
 		for(i = 0; i < varargs.length; i++) args[i] = oldstack.pop();
