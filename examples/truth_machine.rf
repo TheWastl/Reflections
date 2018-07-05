@@ -1,3 +1,0 @@
-  _:#_: _<  Take 0 or 1 as input:
-/#_v     /  - for 0: output one 0 and exit
-\: /        - for 1: output an infinite stream of 1s
